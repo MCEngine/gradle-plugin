@@ -27,17 +27,8 @@ gradlePlugin {
             displayName = 'MCEngine Gradle Plugin'
             description = 'A custom Gradle plugin for MCEngine'
             tags.set(['gradle', 'plugin', 'mcengine'])
-            website.set('https://github.com/MCEngine/gradle-plugin-plugin')
-            vcsUrl.set('https://github.com/MCEngine/gradle-plugin-plugin.git')
         }
     }
-}
-
-pluginBundle {
-    website = 'https://github.com/MCEngine/gradle-plugin-plugin'
-    vcsUrl = 'https://github.com/MCEngine/gradle-plugin-plugin.git'
-    tags = ['gradle', 'plugin', 'mcengine']
-    description = 'A custom Gradle plugin for MCEngine'
 }
 
 publishing {
@@ -51,4 +42,9 @@ publishing {
 
 signing {
     sign publishing.publications
+}
+
+pluginPublishing {
+    website = 'https://github.com/MCEngine/gradle-plugin-plugin'
+    vcsUrl = 'https://github.com/MCEngine/gradle-plugin-plugin.git'
 }
