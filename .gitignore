@@ -12,3 +12,6 @@ build
 *.zip
 *.tar.gz
 *.rar
+
+# GPG
+*.asc
