@@ -24,6 +24,11 @@ gradlePlugin {
         mcenginePlugin {
             id = 'io.github.mcengine.gradle-plugin'
             implementationClass = 'io.github.mcengine.McEngineGradlePlugin'
+            displayName = 'MCEngine Gradle Plugin'
+            description = 'A custom Gradle plugin for MCEngine'
+            tags.set(['gradle', 'plugin', 'mcengine'])
+            website.set('https://github.com/MCEngine/gradle-plugin-plugin')
+            vcsUrl.set('https://github.com/MCEngine/gradle-plugin-plugin.git')
         }
     }
 }
