@@ -12,6 +12,9 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
+
+    id 'java-gradle-plugin'
+    id 'maven-publish'
 }
 
 repositories {
@@ -20,6 +23,8 @@ repositories {
 }
 
 dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
     // Use the latest Groovy version for building this library
     implementation libs.groovy.all
 
@@ -36,6 +41,15 @@ testing {
         test {
             // Use Spock test framework
             useSpock('2.2-groovy-3.0')
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        mcenginePlugin {
+            id = 'io.github.mcengine.gradle-plugin'
+            implementationClass = 'io.github.mcengine.McEngineGradlePlugin'
         }
     }
 }

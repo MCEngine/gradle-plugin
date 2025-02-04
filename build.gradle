@@ -44,7 +44,7 @@ signing {
     sign publishing.publications
 }
 
-pluginPublishing {
+gradlePlugin {
     website = 'https://github.com/MCEngine/gradle-plugin-plugin'
     vcsUrl = 'https://github.com/MCEngine/gradle-plugin-plugin.git'
 }
