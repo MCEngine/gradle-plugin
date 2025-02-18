@@ -8,7 +8,8 @@
             "extensions": [
                 "ms-azuretools.vscode-docker",
                 "alefragnani.bookmarks",
-                "eamodio.gitlens"
+                "eamodio.gitlens",
+                "vscjava.vscode-java-pack"
             ]
         }
     }
