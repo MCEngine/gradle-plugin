@@ -12,4 +12,3 @@ plugins {
 }
 
 rootProject.name = 'mcengine-gradle-plugin'
-include('lib')
