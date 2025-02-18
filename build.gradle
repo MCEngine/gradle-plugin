@@ -24,7 +24,7 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             groupId = 'io.github.mcengine'
-            artifactId = 'MCEngineGradlePlugin'
+            artifactId = 'mcengine-gradle-plugin'
             version = version
         }
     }
