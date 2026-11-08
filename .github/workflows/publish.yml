@@ -1,0 +1,35 @@
+name: Publish
+
+# Publishes the plugin jar and its plugin marker to GitHub Packages and tags
+# the commit when a release/{version} pull request merges. The steps live in the shared
+# MCEngine/actions workflow: it reads project-version from gradle.properties,
+# stops when the v{version} tag already exists, and otherwise builds, tests,
+# publishes and only then tags, so a failed run leaves no tag behind.
+#
+# Only a merged pull request from a release/{version} branch publishes; the
+# shared workflow also checks that {version} is the merged project-version.
+# workflow_dispatch on master runs the same check by hand, to retry a release
+# after a failure.
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  publish:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged &&
+       startsWith(github.event.pull_request.head.ref, 'release/'))
+    permissions:
+      contents: write
+      packages: write
+    uses: MCEngine/actions/.github/workflows/publish.yml@master
+    secrets: inherit
