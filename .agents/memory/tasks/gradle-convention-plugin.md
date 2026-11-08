@@ -81,3 +81,10 @@ TestKit tests in `src/functionalTest`.
 Rewrote `README.md`: what the plugin configures, MCStory's `settings.gradle`, root
 `build.gradle` (`publishedModules.add('tools')`), the shadow-version change, the
 extension reference, and how to build and try it locally.
+
+### Task 4 — ci/workflows
+
+Added thin `publish.yml` and `release.yml` callers of the shared `MCEngine/actions`
+workflows, as every plugin has. Publish runs `./gradlew build` (with the functional
+tests) and `./gradlew publish` when a `release/{version}` PR merges; Release attaches
+`build/libs/gradle-plugin-{version}.jar`.
