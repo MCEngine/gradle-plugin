@@ -116,8 +116,15 @@ project-version=0.2.1
 Nothing changes in CI: `./gradlew publish` publishes `mcstory-api`, `mcstory-common`,
 `mcstory-bukkit` and `mcstory-tools` to `https://maven.pkg.github.com/MCIpos/mcstory`.
 The shared `MCEngine/actions` Publish workflow already sets `GITHUB_ACTOR` and
-`GITHUB_TOKEN` for every step, so the same token resolves this plugin. A local build
-needs a token with `read:packages`; in Windows PowerShell 5:
+`GITHUB_TOKEN` for every step, so the same token resolves this plugin. Two things the
+token needs:
+
+* **Access to this repository's packages.** A workflow token can read another
+  repository's package only when that package is public, or when the package settings
+  (*Manage Actions access*) grant the consuming repository Read. While
+  `MCEngine/gradle-plugin` is private, grant each consuming repository Read before it
+  applies the plugin.
+* **`read:packages`**, for a local build. In Windows PowerShell 5:
 
 ```powershell
 $env:GITHUB_ACTOR = "your-login"; $env:GITHUB_TOKEN = "ghp_..."; .\gradlew.bat build
