@@ -58,3 +58,20 @@ The owner was away and asked for the recommended option at every fork.
 
 Added `.gitignore` (keeps `.agents/plans/` out of history), the memory index and this
 record.
+
+### Task 2 — feat/convention-plugin
+
+Added the Gradle 9.5.0 wrapper, `build.gradle` (`java-gradle-plugin` + Groovy, Java 17
+bytecode, `shadow-gradle-plugin:9.4.1` as `implementation`, GitHub Packages publishing of
+the jar and plugin marker), `MCEngineBuildPlugin`, `MCEngineBuildExtension`, and ten
+TestKit tests in `src/functionalTest`.
+
+* The module lists are set, not conventions, so `publishedModules.add('tools')` extends
+  the default; with a convention, `add` dropped `api`, `common` and `bukkit`.
+* Shadow resolves a module's Java compiler while configuring, so tests pin the toolchain
+  to the running JVM except where they only read the default.
+* A copy of MCStory 0.2.1 with its root `build.gradle` replaced by the plugin and the
+  shadow versions removed built, tested and ran `publishToMavenLocal` for
+  `mcstory-{api,common,bukkit,tools}` with the configuration cache on.
+* Consumers must drop `version '9.4.1'` from every `id 'com.gradleup.shadow'`: Gradle
+  refuses a version for a plugin already on the classpath.
