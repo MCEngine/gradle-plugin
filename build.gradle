@@ -1,0 +1,109 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy'
+    id 'maven-publish'
+}
+
+group = project.property('project-group')
+version = "${project.property('project-version')}"
+
+def gitOrgName = project.property('git-org-name')
+def gitRepository = project.property('git-repository')
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+// The plugin runs inside the consumer's Gradle daemon, not on the Java 25
+// toolchain it configures, so it targets the lowest JVM Gradle 9 runs on.
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.withType(GroovyCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // An `implementation` dependency of a Gradle plugin lands on the consumer's
+    // build classpath, so every subproject can apply `com.gradleup.shadow`
+    // without naming a version — this is the version the family builds with.
+    implementation 'com.gradleup.shadow:shadow-gradle-plugin:9.4.1'
+}
+
+// Functional tests run real builds of a sample plugin layout through TestKit.
+def functionalTest = sourceSets.create('functionalTest')
+gradlePlugin.testSourceSets(functionalTest)
+
+configurations.named('functionalTestImplementation') {
+    extendsFrom configurations.testImplementation
+}
+
+dependencies {
+    functionalTestImplementation localGroovy()
+    functionalTestImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.0'
+    functionalTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.1.0'
+    functionalTestRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+def functionalTestTask = tasks.register('functionalTest', Test) {
+    description = 'Runs the TestKit builds against a sample plugin layout.'
+    group = 'verification'
+    testClassesDirs = functionalTest.output.classesDirs
+    classpath = functionalTest.runtimeClasspath
+    useJUnitPlatform()
+}
+
+tasks.named('check') {
+    dependsOn functionalTestTask
+}
+
+gradlePlugin {
+    website = "https://github.com/${gitOrgName}/${gitRepository}"
+    vcsUrl = "https://github.com/${gitOrgName}/${gitRepository}"
+    plugins {
+        mcengineBuild {
+            id = 'io.github.mcengine.build-logic'
+            implementationClass = 'io.github.mcengine.gradleplugin.MCEngineBuildPlugin'
+            displayName = 'MCEngine build logic'
+            description = 'Java 25 toolchain, shared repositories and GitHub Packages publishing for MCEngine-family plugin builds.'
+            tags.set(['minecraft', 'bukkit', 'conventions'])
+        }
+    }
+}
+
+// java-gradle-plugin publishes two publications: pluginMaven (the jar) and one
+// marker per plugin id, which is how `plugins { id '...' }` finds the jar.
+publishing {
+    repositories {
+        maven {
+            name = 'GitHubPackages'
+            url = "https://maven.pkg.github.com/${gitOrgName}/${gitRepository}"
+            credentials {
+                username = System.getenv('GITHUB_ACTOR')
+                password = System.getenv('GITHUB_TOKEN')
+            }
+        }
+    }
+
+    publications.withType(MavenPublication).configureEach {
+        pom {
+            url = "https://github.com/${gitOrgName}/${gitRepository}"
+            developers {
+                developer {
+                    id = 'jetsadawijit'
+                    name = 'jetsadawijit'
+                    url = 'https://jetsadawijit.github.io'
+                }
+            }
+        }
+    }
+}
