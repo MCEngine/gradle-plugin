@@ -87,10 +87,8 @@ plugins {
 ## 5. Give the token access
 
 * **CI.** The shared `MCEngine/actions` Publish and Release workflows set
-  `GITHUB_ACTOR` and `GITHUB_TOKEN` for every step. That token reads another
-  repository's package only when the package is public or grants the consuming
-  repository Read (package settings > *Manage Actions access*). While
-  `MCEngine/gradle-plugin` is private, grant each consuming repository Read first.
+  `GITHUB_ACTOR` and `GITHUB_TOKEN` for every step. `MCEngine/gradle-plugin` is
+  public, so any repository's workflow token can read the plugin package.
 * **Local builds.** Use a personal token with `read:packages`. In Windows
   PowerShell 5:
 
