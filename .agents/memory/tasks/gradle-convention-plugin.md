@@ -75,3 +75,9 @@ TestKit tests in `src/functionalTest`.
   `mcstory-{api,common,bukkit,tools}` with the configuration cache on.
 * Consumers must drop `version '9.4.1'` from every `id 'com.gradleup.shadow'`: Gradle
   refuses a version for a plugin already on the classpath.
+
+### Task 3 — docs/readme
+
+Rewrote `README.md`: what the plugin configures, MCStory's `settings.gradle`, root
+`build.gradle` (`publishedModules.add('tools')`), the shadow-version change, the
+extension reference, and how to build and try it locally.
