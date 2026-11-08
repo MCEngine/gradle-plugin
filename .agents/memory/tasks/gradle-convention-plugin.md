@@ -5,7 +5,7 @@ description: Task record for MCEngine/gradle-plugin 0.1.0 — the io.github.mcen
 
 # Gradle convention plugin
 
-**Status:** in progress
+**Status:** done
 
 ## Goal
 
@@ -46,11 +46,11 @@ The owner was away and asked for the recommended option at every fork.
 
 | # | Title | Branch | PR |
 |---|---|---|---|
-| 1 | Plan and task record | `plan/gradle-convention-plugin` | |
-| 2 | Convention plugin, build, functional tests | `feat/convention-plugin` | |
-| 3 | README usage guide | `docs/readme` | |
-| 4 | Publish and Release workflow callers | `ci/workflows` | |
-| 5 | Release 0.1.0 | `release/0.1.0` | |
+| 1 | Plan and task record | `plan/gradle-convention-plugin` | #1 |
+| 2 | Convention plugin, build, functional tests | `feat/convention-plugin` | #2 |
+| 3 | README usage guide | `docs/readme` | #3 |
+| 4 | Publish and Release workflow callers | `ci/workflows` | #4 |
+| 5 | Release 0.1.0 | `release/0.1.0` | #5 |
 
 ## Progress
 
@@ -88,3 +88,11 @@ Added thin `publish.yml` and `release.yml` callers of the shared `MCEngine/actio
 workflows, as every plugin has. Publish runs `./gradlew build` (with the functional
 tests) and `./gradlew publish` when a `release/{version}` PR merges; Release attaches
 `build/libs/gradle-plugin-{version}.jar`.
+
+### Task 5 — release/0.1.0
+
+`project-version` 0.0.0 → 0.1.0 (the first release; chosen as the recommended option
+while the owner was away) and `wiki/logs/0/1/0/CHANGELOG.md`. Filled the PR column.
+Left open: `MCEngine/gradle-plugin` is private, so a consuming repository needs Read on
+the package (or the repository made public) before it can apply the plugin; no plugin
+is migrated yet.
