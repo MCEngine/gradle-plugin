@@ -32,4 +32,6 @@ jobs:
       contents: write
       packages: write
     uses: MCEngine/actions/.github/workflows/publish.yml@master
+    with:
+      publish-plugin-portal: true
     secrets: inherit
